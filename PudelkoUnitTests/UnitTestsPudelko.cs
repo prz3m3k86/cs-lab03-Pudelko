@@ -1,4 +1,4 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PudelkoLibrary;
 using System;
 using System.Collections.Generic;
@@ -447,16 +447,97 @@ namespace PudelkoUnitTests
 
 
         #region Pole, Objętość ===================================
-        // ToDo
+        
+        [DataTestMethod]
+        [DataRow(1.0, 1.0, 1.0, 1.0)]
+        [DataRow(2.5, 3.1, 1.25, 9.6875)]
+        [DataRow(9.5, 9.00001, 9.0, 769.5)]
+        public void Objetosc_test(double a, double b, double c, double expected)
+        {
+            Pudelko pudelko = new Pudelko(a, b, c);
+
+            Assert.AreEqual(expected, pudelko.Objetosc);
+        }
+
+        [DataTestMethod]
+        [DataRow(1.0, 1.0, 1.0, 6.0)]
+        [DataRow(2.5, 3.1, 1.25, 29.5)]
+        [DataRow(9.5, 9.00001, 9.0, 504.0)]
+        public void Pole_test(double a, double b, double c, double expected)
+        {
+            Pudelko pudelko = new Pudelko(a, b, c);
+
+            Assert.AreEqual(expected, pudelko.Pole);
+        }
 
         #endregion
 
         #region Equals ===========================================
-        // ToDo
+
+        [DataTestMethod]
+        [DataRow(1.0, 1.0, 1.0, 1.0, 1.000001, 1.0, true)]
+        [DataRow(2.5, 3.1, 1.25, 3.1, 2.5, 1.25, true)]
+        [DataRow(9.5, 9.001, 9.0, 9.001, 9.0, 9.5, true)]
+        [DataRow(2.5, 3.1, 1.25, 3.1, 2.5, 1.2555, false)]
+        [DataRow(9.5, 9.001, 9.0, 9.0001, 9.0, 9.5, false)]
+        public void Equals_test(double a1, double b1, double c1, double a2, double b2, double c2, bool expected)
+        {
+            Pudelko pudelko1 = new Pudelko(a1, b1, c1);
+            Pudelko pudelko2 = new Pudelko(a2, b2, c2);
+
+            Assert.AreEqual(expected, pudelko1.Equals(pudelko2));
+        }
+
         #endregion
 
         #region Operators overloading ===========================
-        // ToDo
+
+        [DataTestMethod]
+        [DataRow(1.0, 1.0, 1.0, 1.0, 1.000001, 1.0, true)]
+        [DataRow(2.5, 3.1, 1.25, 3.1, 2.5, 1.25, true)]
+        [DataRow(9.5, 9.001, 9.0, 9.001, 9.0, 9.5, true)]
+        [DataRow(2.5, 3.1, 1.25, 3.1, 2.5, 1.2555, false)]
+        [DataRow(9.5, 9.001, 9.0, 9.0001, 9.0, 9.5, false)]
+        public void Equal_operator_test(double a1, double b1, double c1, double a2, double b2, double c2, bool expected)
+        {
+            Pudelko pudelko1 = new Pudelko(a1, b1, c1);
+            Pudelko pudelko2 = new Pudelko(a2, b2, c2);
+
+            Assert.AreEqual(expected, pudelko1 == pudelko2);
+        }
+
+        [DataTestMethod]
+        [DataRow(1.0, 1.0, 1.0, 1.0, 1.000001, 1.0, false)]
+        [DataRow(2.5, 3.1, 1.25, 3.1, 2.5, 1.25, false)]
+        [DataRow(9.5, 9.001, 9.0, 9.001, 9.0, 9.5, false)]
+        [DataRow(2.5, 3.1, 1.25, 3.1, 2.5, 1.2555, true)]
+        [DataRow(9.5, 9.001, 9.0, 9.0001, 9.0, 9.5, true)]
+        public void Not_equal_operator_test(double a1, double b1, double c1, double a2, double b2, double c2, bool expected)
+        {
+            Pudelko pudelko1 = new Pudelko(a1, b1, c1);
+            Pudelko pudelko2 = new Pudelko(a2, b2, c2);
+
+            Assert.AreEqual(expected, pudelko1 != pudelko2);
+        }
+
+        [DataTestMethod]
+        [DataRow(1.0, 1.0, 1.0, 1.0, 1.000001, 1.0, 2.0, 2.0, 2.0)]
+        [DataRow(2.5, 3.1, 1.25, 3.1, 2.5, 1.25, 2.5, 5.0, 6.2)]
+        [DataRow(3.25, 2.009, 1.2, 4.001, 4.0, 4.5, 5.2, 6.01, 7.75)]
+        public void Plus_operator_test(double a1, double b1, double c1,
+            double a2, double b2, double c2,
+            double expectedA, double expectedB, double expectedC)
+        {
+            Pudelko pudelko1 = new Pudelko(a1, b1, c1);
+            Pudelko pudelko2 = new Pudelko(a2, b2, c2);
+
+            Pudelko newPudelko = pudelko1 + pudelko2;
+
+            Assert.AreEqual(expectedA, newPudelko.A);
+            Assert.AreEqual(expectedB, newPudelko.B);
+            Assert.AreEqual(expectedC, newPudelko.C);
+        }
+
         #endregion
 
         #region Conversions =====================================
